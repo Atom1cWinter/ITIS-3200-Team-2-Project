@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bqqhyrbv3m2aw"]
+
+[ext_resource type="Texture2D" uid="uid://cknorfktt5pjb" path="res://art/icon.svg" id="1_6iamk"]
+[ext_resource type="PackedScene" uid="uid://bedtdhcxcihsn" path="res://scenes/player.tscn" id="2_nsrm0"]
+[ext_resource type="PackedScene" uid="uid://djyd5vfkp5ft8" path="res://scenes/level_portal.tscn" id="3_nsrm0"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_evi0p"]
+
+[node name="level_1" type="Node2D" unique_id=1109049983]
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=470742361]
+texture_filter = 1
+position = Vector2(-11.000015, -14.000001)
+rotation = 3.1390824
+scale = Vector2(11.9615, 8.350729)
+texture = ExtResource("1_6iamk")
+
+[node name="player" parent="." unique_id=400546572 instance=ExtResource("2_nsrm0")]
+coins = 10
+has_jump_ability = true
+
+[node name="player_camera" type="Camera2D" parent="player" unique_id=1138763756]
+position_smoothing_enabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1782121021]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1700978786]
+position = Vector2(0, 331)
+shape = SubResource("WorldBoundaryShape2D_evi0p")
+
+[node name="level_portal_area" parent="." unique_id=380477607 instance=ExtResource("3_nsrm0")]
+position = Vector2(499, 245)
