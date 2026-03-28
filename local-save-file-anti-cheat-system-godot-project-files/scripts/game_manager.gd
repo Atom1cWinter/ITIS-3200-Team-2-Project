@@ -4,7 +4,6 @@ extends Node
 # Variables
 # -------------------------------------------------------------------
 
-var player : Node = null
 const LAST_LEVEL : int = 2
 
 # -------------------------------------------------------------------
@@ -43,11 +42,12 @@ func _ready() -> void:
 func restart_level() -> void:
 	get_tree().reload_current_scene()
 	
-func proceed_to_next_level() -> void:
-	current_game_level = "level_" + str( clamp(current_game_level.to_int() + 1 , 0, LAST_LEVEL) )
+func complete_level(run_data: Dictionary) -> void:
+	commit_run_data(run_data)
 	save_game()
-	load_current_level()
 	
+	current_game_level = "level_" + str( clamp(current_game_level.to_int() + 1 , 0, LAST_LEVEL) )
+	load_current_level()
 	
 func load_current_level() -> void:
 	var scene_path = "res://scenes/levels/" + current_game_level + ".tscn"
@@ -68,13 +68,13 @@ func game_over() -> void:
 
 # Called when player goes to next level
 func save_game() -> void:
-	set_data(player.get_data())
-
+	pass
+	
 func load_save() -> void:
 	pass
 
 # Player will call GameManager.get_data to request data
-func get_data() -> Dictionary:
+func get_save_data() -> Dictionary:
 	return {
 		"coins": coins,
 		"health": health,
@@ -87,7 +87,7 @@ func get_data() -> Dictionary:
 # Takes data from dictionary and updates save data variables with values from dictionary.
 # Parameter: data -> a dictionary that stores saved values for save data.
 # Returns: -1 if error. 0 if ok.
-func set_data(data: Dictionary) -> int:
+func commit_run_data(data: Dictionary) -> int:
 	for key in SAVE_SCHEMA.keys():
 		if data.has(key) and typeof(data[key]) == SAVE_SCHEMA[key]:
 			set(key, data[key]) # dynamically assigns variable

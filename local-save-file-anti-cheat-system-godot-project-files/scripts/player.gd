@@ -11,7 +11,7 @@ const GRAVITY : float = 900.0        		# Downward acceleration
 const JUMP_CUT_MULTIPLIER : float = 0.5 	# Lower = shorter cut jump
 
 # -------------------------------------------------------------------
-# Save Data Variables 
+# Run Data Variables 
 # ( Per Level. Updated by GameManager on level load. 
 # Sent to GameManager after level completion )
 # -------------------------------------------------------------------
@@ -42,9 +42,7 @@ func _ready() -> void:
 	add_to_group("damageable")
 	add_to_group("player")
 	
-	GameManager.player = self
-	
-	set_data(GameManager.get_data())
+	set_run_data(GameManager.get_save_data())
 	print(coins)
 	
 func _physics_process(delta : float) -> void:
@@ -108,7 +106,7 @@ func die() -> void:
 # -------------------------------------------------------------------
 
 # Packages player save data into a dictionary and returns it
-func get_data() -> Dictionary:
+func get_run_data() -> Dictionary:
 	return {
 		"coins": coins,
 		"health": health,
@@ -121,7 +119,7 @@ func get_data() -> Dictionary:
 # Takes data from dictionary and updates save data variables with values from dictionary.
 # Parameter: data -> a dictionary that stores saved values for save data.
 # Returns: -1 if error. 0 if ok.
-func set_data(data: Dictionary) -> int:
+func set_run_data(data: Dictionary) -> int:
 	for key in SAVE_SCHEMA.keys():
 		if data.has(key) and typeof(data[key]) == SAVE_SCHEMA[key]:
 			set(key, data[key]) # dynamically assigns variable
