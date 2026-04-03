@@ -26,9 +26,9 @@ This project uses a dedicated Python FastAPI server to handle HMAC cryptographic
   
 
   🛠️ Troubleshooting
-   - Permission Denied on source
+   - Permission Denied on source: 
        Ensure you are using the source command, not executing the file directly. If issues persist, run sudo chown -R $USER:$USER venv.
-   - Connection Timeout in Godot
+   - Connection Timeout in Godot: 
        Verify the VM Firewall is open: sudo ufw allow 8000/tcp. Ensure the VM is using a Bridged Adapter in VirtualBox settings.
-   - Node Not Found (Godot)
+   - Node Not Found (Godot): 
        Ensure the SaveManager Autoload points to the .tscn file, not the .gd file.
