@@ -12,10 +12,10 @@ This project uses a dedicated Python FastAPI server to handle HMAC cryptographic
        $ ip addr show
       Note: If the IP is not 192.168.18.40, you must update the SERVER_URL in SaveManager.gd in Godot.
   4. Navigate & Activate:
-     $ Bashcd ~/sign-server
-     $ source venv/bin/activate
+     Bash cd ~/sign-server
+     Bash source venv/bin/activate
   5. Run the API:
-     $ uvicorn main:app --host 0.0.0.0 --port 8000
+     Bash uvicorn main:app --host 0.0.0.0 --port 8000
 2. Health Check
    To verify the server is reachable from your host machine, open a browser and visit:
    http://<VM_IP>:8000/health
