@@ -18,9 +18,8 @@ This project uses a dedicated Python FastAPI server to handle HMAC cryptographic
      uvicorn main:app --host 0.0.0.0 --port 8000
 2. Health Check
    To verify the server is reachable from your host machine, open a browser and visit:
-   http://<VM_IP>:8000/health
-   You should see: {"status": "online"}
-3. Running in Background (Optional)
+   http://<VM_IP>:8000/health. You should see: {"status": "online"}
+4. Running in Background (Optional)
    To keep the server running after closing your terminal window, use screen:
    - Start: screen -S hmac_session -> Run the uvicorn command -> Press Ctrl+A then D.
    - Re-attach: screen -r hmac_session
