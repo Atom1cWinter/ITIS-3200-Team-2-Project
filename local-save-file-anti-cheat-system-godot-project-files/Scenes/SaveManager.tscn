@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dq1eskm8v8wq7"]
 
-[ext_resource type="Script" uid="uid://bgn4ym0sj76dj" path="res://Scenes/save_manager.gd" id="1_up4r5"]
+[ext_resource type="Script" uid="uid://dvi7vsmu5inkt" path="res://scripts/save_manager.gd" id="1_030la"]
 
 [node name="SaveManager" type="Node" unique_id=138804857]
-script = ExtResource("1_up4r5")
+script = ExtResource("1_030la")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1122959186]

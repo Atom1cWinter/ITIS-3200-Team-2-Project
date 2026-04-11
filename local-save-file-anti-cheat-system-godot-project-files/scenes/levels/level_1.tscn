@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cknorfktt5pjb" path="res://art/icon.svg" id="1_6iamk"]
 [ext_resource type="PackedScene" uid="uid://bedtdhcxcihsn" path="res://scenes/player.tscn" id="2_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://djyd5vfkp5ft8" path="res://scenes/level_portal.tscn" id="3_nsrm0"]
+[ext_resource type="PackedScene" uid="uid://82xkbebhp207" path="res://scenes/coin.tscn" id="4_x42e6"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_evi0p"]
 
@@ -30,3 +31,12 @@ shape = SubResource("WorldBoundaryShape2D_evi0p")
 
 [node name="level_portal_area" parent="." unique_id=380477607 instance=ExtResource("3_nsrm0")]
 position = Vector2(499, 245)
+
+[node name="Coin" parent="." unique_id=589068602 instance=ExtResource("4_x42e6")]
+position = Vector2(223, 291)
+
+[node name="Coin2" parent="." unique_id=33082834 instance=ExtResource("4_x42e6")]
+position = Vector2(285, 291)
+
+[node name="Coin3" parent="." unique_id=1254267065 instance=ExtResource("4_x42e6")]
+position = Vector2(349, 291)

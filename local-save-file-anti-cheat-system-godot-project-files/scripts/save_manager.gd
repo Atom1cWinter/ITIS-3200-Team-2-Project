@@ -23,7 +23,7 @@ func request_signature(save_content: String):
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
-func _on_hmac_received(result, response_code, headers, body):
+func _on_hmac_received(_result, response_code, _headers, body):
 	if response_code == 200:
 		var response = JSON.parse_string(body.get_string_from_utf8())
 		var hmac = response["hmac"]
@@ -33,5 +33,5 @@ func _on_hmac_received(result, response_code, headers, body):
 		print("Server returned error code: ", response_code)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

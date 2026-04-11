@@ -15,7 +15,8 @@ var health : int = 1
 var hearts : int = 1
 var energy_cells : int = 1
 # Abilities:
-var has_jump_ability : bool = false
+var has_jump_ability : bool = true
+var has_dash_ability : bool = true
 var has_melee_ability : bool = false
 # Current Level:
 var current_game_level : String = "level_1"
@@ -27,6 +28,7 @@ const SAVE_SCHEMA := {
 	"hearts": TYPE_INT,
 	"energy_cells": TYPE_INT,
 	"has_jump_ability": TYPE_BOOL,
+	"has_dash_ability" : TYPE_BOOL,
 	"has_melee_ability": TYPE_BOOL
 }
 
@@ -66,14 +68,14 @@ func game_over() -> void:
 # Save and Load System
 # -------------------------------------------------------------------
 
-# Called when player goes to next level
+# Called in complete_level().
 func save_game() -> void:
 	pass
 	
 func load_save() -> void:
 	pass
 
-# Player will call GameManager.get_data to request data
+# Player will call GameManager.get_save_data to request data
 func get_save_data() -> Dictionary:
 	return {
 		"coins": coins,
@@ -81,6 +83,7 @@ func get_save_data() -> Dictionary:
 		"hearts": hearts,
 		"energy_cells": energy_cells,
 		"has_jump_ability": has_jump_ability,
+		"has_dash_ability": has_dash_ability,
 		"has_melee_ability": has_melee_ability
 	}
 
