@@ -1,7 +1,7 @@
 extends Node
 
 # This is the server IP address (I have not made it a static IP yet and will change this once I do)
-const SERVER_URL = "http://192.168.18.40:8000/generate-hmac"
+const SERVER_URL = "http://0.tcp.ngrok.io:16744/generate-hmac"
 
 @onready var http_request = $HTTPRequest
 
@@ -16,7 +16,9 @@ func _ready() -> void:
 	request_signature("player_gold:100;player_level:5")
 
 func request_signature(save_content: String):
-	var headers = ["Content-Type: application/json"]
+	var headers = ["Content-Type: application/json",
+	"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+	"x-pinggy-no-screen: true"]
 	var body = JSON.stringify({"data": save_content})
 	
 	var error = http_request.request(SERVER_URL, headers, HTTPClient.METHOD_POST, body)
