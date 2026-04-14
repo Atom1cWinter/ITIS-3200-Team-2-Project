@@ -70,10 +70,16 @@ func game_over() -> void:
 
 # Called in complete_level().
 func save_game() -> void:
-	pass
+	var current_data = get_save_data()
+	SaveManager.create_secure_save(current_data)
 	
 func load_save() -> void:
-	pass
+	var validated_data = await SaveManager.load_secure_save()
+	
+	if not validated_data.is_empty():
+		commit_run_data(validated_data)
+	else:
+		print("Using default starting stats")
 
 # Player will call GameManager.get_save_data to request data
 func get_save_data() -> Dictionary:
@@ -90,11 +96,20 @@ func get_save_data() -> Dictionary:
 # Takes data from dictionary and updates save data variables with values from dictionary.
 # Parameter: data -> a dictionary that stores saved values for save data.
 # Returns: -1 if error. 0 if ok.
+# Updated to handle int to float mismatch
 func commit_run_data(data: Dictionary) -> int:
 	for key in SAVE_SCHEMA.keys():
-		if data.has(key) and typeof(data[key]) == SAVE_SCHEMA[key]:
-			set(key, data[key]) # dynamically assigns variable
+		if data.has(key):
+			var expected_type = SAVE_SCHEMA[key]
+			var value = data[key]
+			
+			if typeof(value) == expected_type:
+				set(key, value)
+			elif expected_type == TYPE_INT and typeof(value) == TYPE_FLOAT:
+				# Godot JSON parses all numbers as floats. Safely cast it back!
+				set(key, int(value))
+			else: 
+				push_warning("Type mismatch for: %s" % key)
 		else:
 			push_warning("Using default for: %s" % key)
-	
 	return 0
