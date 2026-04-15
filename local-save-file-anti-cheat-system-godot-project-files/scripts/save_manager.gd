@@ -1,7 +1,7 @@
 extends Node
 
 # This is the server IP address, change if different deployment address
-const SERVER_URL = "http://0.tcp.ngrok.io:16744" # This is a direct TCP endpoint, there were issues with deployment
+const SERVER_URL = "http://2.tcp.ngrok.io:15081" # This is a direct TCP endpoint, there were issues with deployment
 
 @onready var http_request = $HTTPRequest
 
