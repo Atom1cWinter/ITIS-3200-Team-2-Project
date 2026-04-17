@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://t4l8g3gaeyq4" path="res://scripts/level_portal.gd" id="1_esam1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ig20"]
-radius = 75.026665
+radius = 21.023796
 
 [node name="level_portal_area" type="Area2D" unique_id=380477607]
 script = ExtResource("1_esam1")

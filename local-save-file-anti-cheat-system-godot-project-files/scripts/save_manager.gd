@@ -1,7 +1,7 @@
 extends Node
 
 # This is the server IP address (I have not made it a static IP yet and will change this once I do)
-const SERVER_URL = "http://192.168.18.40:8000/generate-hmac"
+const SERVER_URL = "http://0.tcp.ngrok.io:16744/generate-hmac"
 
 @onready var http_request = $HTTPRequest
 

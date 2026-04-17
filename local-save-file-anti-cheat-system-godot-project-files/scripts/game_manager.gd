@@ -62,6 +62,9 @@ func load_current_level() -> void:
 	
 func game_over() -> void:
 	print("Player Died! Restarting Game.")
+	Engine.time_scale = 0.25
+	await get_tree().create_timer(0.25).timeout
+	Engine.time_scale = 1
 	restart_level()
 	
 # -------------------------------------------------------------------

@@ -20,6 +20,10 @@ config/icon="res://art/icon.svg"
 GameManager="*uid://d3vqjjkrgdr88"
 SaveManager="*uid://dq1eskm8v8wq7"
 
+[display]
+
+window/vsync/vsync_mode=2
+
 [input]
 
 jump={
@@ -51,4 +55,5 @@ dash={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"

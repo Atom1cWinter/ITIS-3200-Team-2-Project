@@ -1,12 +1,17 @@
 extends CharacterBody2D
 
 # -------------------------------------------------------------------
+# Children Nodes
+# -------------------------------------------------------------------
+@onready var player_animation = $player_animation_sprite
+
+# -------------------------------------------------------------------
 # Player Movement Variables
 # -------------------------------------------------------------------
 
 # tweak for feel
-const SPEED : float = 250.0          		# Horizontal movement speed
-const JUMP_VELOCITY : float = -500.0 		# Negative = up in Godot
+const SPEED : float = 100.0          		# Horizontal movement speed
+const JUMP_VELOCITY : float = -300.0 		# Negative = up in Godot
 const GRAVITY : float = 900.0        		# Downward acceleration
 const JUMP_CUT_MULTIPLIER : float = 0.5 	# Lower = shorter cut jump
 const DASH_SPEED_MULTIPLIER : float = 5		# Higher = faster and farther dashes
@@ -81,6 +86,8 @@ func _physics_process(delta : float) -> void:
 		PlayerState.DASH:
 			_state_dash(delta)
 	
+	change_player_direction()
+	
 	move_and_slide()
 	
 # -------------------------------------------------------------------
@@ -122,6 +129,8 @@ func _apply_gravity(delta : float) -> void:
 		velocity.y = 0
 
 func _state_idle(_delta : float) -> void:
+	player_animation.play("idle")
+	
 	var direction := Input.get_axis("move_left", "move_right")
 	
 	if not is_on_floor():
@@ -142,6 +151,8 @@ func _state_idle(_delta : float) -> void:
 	velocity.x = move_toward(velocity.x, 0, SPEED) # Smooth deceleration if was moving
 
 func _state_run(_delta: float) -> void:
+	player_animation.play("run")
+	
 	var direction := Input.get_axis("move_left", "move_right")
 	
 	if not is_on_floor():
@@ -171,6 +182,8 @@ func _start_jump() -> void:
 	current_state = PlayerState.JUMP	
 
 func _state_jump(_delta : float) -> void:
+	player_animation.play("jump")
+	
 	# Handle movement while in air
 	var direction := Input.get_axis("move_left", "move_right")
 	velocity.x = direction * SPEED
@@ -185,6 +198,8 @@ func _state_jump(_delta : float) -> void:
 		current_state = PlayerState.FALL
 
 func _state_fall(_delta : float) -> void:
+	player_animation.play("fall")
+	
 	# Handle movement while falling
 	var direction := Input.get_axis("move_left", "move_right")
 	velocity.x = direction * SPEED
@@ -215,7 +230,15 @@ func _start_dash(direction: float) -> void:
 		current_state = PlayerState.FALL
 
 func _state_dash(_delta: float) -> void:
+	player_animation.play("dash")
 	velocity.x = dash_direction * SPEED * DASH_SPEED_MULTIPLIER
+	
+func change_player_direction() -> void:
+	var direction := Input.get_axis("move_left", "move_right")
+	if direction > 0:
+		player_animation.flip_h = false
+	elif direction < 0:
+		player_animation.flip_h = true
 
 # -------------------------------------------------------------------
 #  Health Logic
@@ -230,8 +253,8 @@ func hit(amount: int) -> void:
 		die()
 
 func die() -> void:
+	get_node("player_collision_shape").queue_free()
 	GameManager.game_over() # Notify game_manager that the player died
-	queue_free()
 
 # -------------------------------------------------------------------
 # Data Logic
