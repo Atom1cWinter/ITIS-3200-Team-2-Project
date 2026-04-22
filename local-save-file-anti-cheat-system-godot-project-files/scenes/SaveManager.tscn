@@ -4,5 +4,6 @@
 
 [node name="SaveManager" type="Node" unique_id=138804857]
 script = ExtResource("1_030la")
+is_secure = false
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1122959186]

@@ -80,13 +80,7 @@ func game_over() -> void:
 # Called in complete_level().
 func save_game() -> void:
 	var current_data = get_save_data()
-	var save_status = await SaveManager.create_secure_save(current_data)
-	if save_status == 0:
-		print("Successfull Save")
-	elif save_status == -1:
-		print("Error occurred while saving game!")
-	else:
-		print("Something unexpected happened while saving.")
+	await SaveManager.create_secure_save(current_data)
 	
 func load_save() -> void:
 	var validated_data = await SaveManager.load_secure_save()
