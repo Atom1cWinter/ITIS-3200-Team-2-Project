@@ -1,14 +1,62 @@
 [gd_scene format=3 uid="uid://djyd5vfkp5ft8"]
 
 [ext_resource type="Script" uid="uid://t4l8g3gaeyq4" path="res://scripts/level_portal.gd" id="1_esam1"]
+[ext_resource type="Texture2D" uid="uid://c1ntbl6wlrukj" path="res://art/teleport_platform.png" id="2_u3ui4"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7ig20"]
-radius = 21.023796
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nt277"]
+radius = 5.0
+height = 24.0
 
-[node name="level_portal_area" type="Area2D" unique_id=380477607]
+[sub_resource type="Gradient" id="Gradient_u3ui4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nt277"]
+gradient = SubResource("Gradient_u3ui4")
+
+[sub_resource type="Curve" id="Curve_yeg8l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0nnh8"]
+curve = SubResource("Curve_yeg8l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bvmul"]
+emission_shape_scale = Vector3(10, 2.155, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_max = 1.3
+scale_curve = SubResource("CurveTexture_0nnh8")
+color_ramp = SubResource("GradientTexture1D_nt277")
+
+[node name="LevelPortal" type="Area2D" unique_id=380477607]
 script = ExtResource("1_esam1")
 
-[node name="level_portal_collision" type="CollisionShape2D" parent="." unique_id=1363117322]
-shape = SubResource("CircleShape2D_7ig20")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1363117322]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_nt277")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1262418356]
+position = Vector2(0, -3)
+texture = ExtResource("2_u3ui4")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=174285935]
+modulate = Color(0.18039216, 0.5764706, 0.98039216, 1)
+show_behind_parent = true
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_bvmul")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1556604172]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=226335861]
+polygon = PackedVector2Array(-16, 5, -16, 1, -15, 1, -15, 0, -12, 0, -12, -1, 12, -1, 12, 0, 15, 0, 15, 1, 16, 1, 16, 5)
 
 [connection signal="body_entered" from="." to="." method="_on_portal_entered"]

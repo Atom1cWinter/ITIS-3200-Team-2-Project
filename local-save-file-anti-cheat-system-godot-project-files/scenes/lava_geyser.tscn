@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://yxtuxdfhdmoj"]
+
+[ext_resource type="Script" uid="uid://dtxrrep6y7dll" path="res://scripts/lava_geyser.gd" id="1_x3mc5"]
+[ext_resource type="Texture2D" uid="uid://ctsthqhonf7uj" path="res://art/lava_geyser.png" id="2_el7wl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_el7wl"]
+size = Vector2(16, 11)
+
+[node name="LavaGeyser" type="StaticBody2D" unique_id=1175635302 groups=["geysers"]]
+script = ExtResource("1_x3mc5")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1971756345]
+texture = ExtResource("2_el7wl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=11141603]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_el7wl")
+
+[node name="FirePoint" type="Marker2D" parent="." unique_id=1944307762]
+position = Vector2(0, -2)
+
+[node name="FireCooldown" type="Timer" parent="." unique_id=1505029442]

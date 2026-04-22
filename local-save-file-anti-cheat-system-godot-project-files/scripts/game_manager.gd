@@ -29,7 +29,8 @@ const SAVE_SCHEMA := {
 	"energy_cells": TYPE_INT,
 	"has_jump_ability": TYPE_BOOL,
 	"has_dash_ability" : TYPE_BOOL,
-	"has_melee_ability": TYPE_BOOL
+	"has_melee_ability": TYPE_BOOL,
+	"current_game_level": TYPE_STRING
 }
 
 # -------------------------------------------------------------------
@@ -37,7 +38,8 @@ const SAVE_SCHEMA := {
 # -------------------------------------------------------------------
 
 func _ready() -> void:
-	load_save()
+	await load_save()
+	print(get_save_data())
 	load_current_level()
 
 # Reload the current scene
@@ -45,10 +47,13 @@ func restart_level() -> void:
 	get_tree().reload_current_scene()
 	
 func complete_level(run_data: Dictionary) -> void:
+	# Override save data with run data
 	commit_run_data(run_data)
-	save_game()
-	
+	# Update current level
 	current_game_level = "level_" + str( clamp(current_game_level.to_int() + 1 , 0, LAST_LEVEL) )
+	# Save game using save data
+	await save_game() # TODO If server is down player can't get past this point.
+	# Load updated current level
 	load_current_level()
 	
 func load_current_level() -> void:
@@ -56,6 +61,7 @@ func load_current_level() -> void:
 	if get_tree().current_scene.name == current_game_level:
 		print("Current level already loaded.")
 	elif ResourceLoader.exists(scene_path):
+		print( "Loading level " + str( scene_path.to_int() ) )
 		get_tree().change_scene_to_file.call_deferred(scene_path)
 	else:
 		push_error("Level at -> " + scene_path + " -> does not exist or could not be found.")
@@ -74,7 +80,13 @@ func game_over() -> void:
 # Called in complete_level().
 func save_game() -> void:
 	var current_data = get_save_data()
-	SaveManager.create_secure_save(current_data)
+	var save_status = await SaveManager.create_secure_save(current_data)
+	if save_status == 0:
+		print("Successfull Save")
+	elif save_status == -1:
+		print("Error occurred while saving game!")
+	else:
+		print("Something unexpected happened while saving.")
 	
 func load_save() -> void:
 	var validated_data = await SaveManager.load_secure_save()
@@ -93,7 +105,8 @@ func get_save_data() -> Dictionary:
 		"energy_cells": energy_cells,
 		"has_jump_ability": has_jump_ability,
 		"has_dash_ability": has_dash_ability,
-		"has_melee_ability": has_melee_ability
+		"has_melee_ability": has_melee_ability,
+		"current_game_level": current_game_level
 	}
 
 # Takes data from dictionary and updates save data variables with values from dictionary.

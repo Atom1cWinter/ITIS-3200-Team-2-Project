@@ -111,15 +111,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgqql"]
 size = Vector2(10, 15.9)
 
-[node name="player" type="CharacterBody2D" unique_id=400546572]
+[node name="Player" type="CharacterBody2D" unique_id=400546572]
 script = ExtResource("1_g2els")
 
-[node name="player_animation_sprite" type="AnimatedSprite2D" parent="." unique_id=16078764]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=16078764]
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"dash"
 frame_progress = 0.33859605
 
-[node name="player_collision_shape" type="CollisionShape2D" parent="." unique_id=982286095]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=982286095]
 position = Vector2(0, 3.9999998)
 scale = Vector2(0.9999996, 0.9999996)
 shape = SubResource("RectangleShape2D_vgqql")

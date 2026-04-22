@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://k5x4hmp83mrb"]
+
+[ext_resource type="Texture2D" uid="uid://cc4p6wx15sk8i" path="res://art/spike.png" id="1_7a7y0"]
+[ext_resource type="PackedScene" uid="uid://htv2rmcls11x" path="res://scenes/kill_area.tscn" id="2_d2mqm"]
+
+[node name="Spike" type="StaticBody2D" unique_id=1901944010]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=63159361]
+texture = ExtResource("1_7a7y0")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=937433012]
+visible = false
+polygon = PackedVector2Array(-7, 8, 7, 8, 0, -8)
+
+[node name="kill_area" parent="." unique_id=414998731 instance=ExtResource("2_d2mqm")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="kill_area" unique_id=1521260651]
+visible = false
+polygon = PackedVector2Array(0, -9, -2, -7, -5, -1, -7, 5, -7, 8, 7, 8, 7, 5, 5, -1, 2, -7)

@@ -197,7 +197,7 @@ _data = {
 &"pickup": SubResource("Animation_0t7oa")
 }
 
-[node name="Coin" type="Area2D" unique_id=589068602]
+[node name="Coin" type="Area2D" unique_id=589068602 groups=["coins"]]
 script = ExtResource("1_ix6bn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=13414933]

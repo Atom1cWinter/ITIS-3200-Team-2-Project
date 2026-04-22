@@ -3,7 +3,7 @@ extends CharacterBody2D
 # -------------------------------------------------------------------
 # Children Nodes
 # -------------------------------------------------------------------
-@onready var player_animation = $player_animation_sprite
+@onready var player_animation = $AnimatedSprite2D
 
 # -------------------------------------------------------------------
 # Player Movement Variables
@@ -47,6 +47,8 @@ var current_state : PlayerState = PlayerState.IDLE
 @export var has_jump_ability : bool = false
 @export var has_dash_ability : bool = false
 @export var has_melee_ability : bool = false
+# Current Level:
+var current_game_level : String = "level_1"
 
 # Save dictionary schema
 const SAVE_SCHEMA := {
@@ -56,7 +58,8 @@ const SAVE_SCHEMA := {
 	"energy_cells": TYPE_INT,
 	"has_jump_ability": TYPE_BOOL,
 	"has_dash_ability": TYPE_BOOL,
-	"has_melee_ability": TYPE_BOOL
+	"has_melee_ability": TYPE_BOOL,
+	"current_game_level": TYPE_STRING
 }
 
 # -------------------------------------------------------------------
@@ -253,7 +256,7 @@ func hit(amount: int) -> void:
 		die()
 
 func die() -> void:
-	get_node("player_collision_shape").queue_free()
+	get_node("CollisionShape2D").queue_free()
 	GameManager.game_over() # Notify game_manager that the player died
 
 # -------------------------------------------------------------------
@@ -269,7 +272,8 @@ func get_run_data() -> Dictionary:
 		"energy_cells": energy_cells,
 		"has_jump_ability": has_jump_ability,
 		"has_dash_ability": has_dash_ability,
-		"has_melee_ability": has_melee_ability
+		"has_melee_ability": has_melee_ability,
+		"current_game_level": current_game_level
 	}
 
 # Takes data from dictionary and updates save data variables with values from dictionary.

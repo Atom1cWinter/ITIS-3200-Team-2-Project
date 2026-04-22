@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cn14bq3io234o"]
+
+[ext_resource type="Script" uid="uid://b7en4gs7tlgfg" path="res://scripts/fireball.gd" id="1_1gl40"]
+[ext_resource type="Texture2D" uid="uid://sdt283o6sq3p" path="res://art/fruit.png" id="2_cb14k"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7kba2"]
+radius = 4.0
+height = 12.0
+
+[node name="Fireball" type="Area2D" unique_id=1637878576]
+script = ExtResource("1_1gl40")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1449691746]
+rotation = -1.5707964
+shape = SubResource("CapsuleShape2D_7kba2")
+debug_color = Color(0.96789366, 0.18176621, 1.92523e-07, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1591354111]
+rotation = -1.5707964
+texture = ExtResource("2_cb14k")
+region_enabled = true
+region_rect = Rect2(20, 53, 8, 11)

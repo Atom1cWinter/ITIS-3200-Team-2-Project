@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dp26cwl4xj2as"]
+
+[ext_resource type="Script" uid="uid://dix4ukma8gakv" path="res://scripts/falling_platform.gd" id="1_eyv7q"]
+[ext_resource type="Texture2D" uid="uid://bsulqq6wwcgqy" path="res://art/world_tileset.png" id="1_l3rcd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyv7q"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rehgp"]
+size = Vector2(16, 18)
+
+[node name="FallingPlatform" type="RigidBody2D" unique_id=1224982434]
+gravity_scale = 0.4
+lock_rotation = true
+freeze = true
+script = ExtResource("1_eyv7q")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=698558472]
+texture = ExtResource("1_l3rcd")
+region_enabled = true
+region_rect = Rect2(112, 32, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=328216725]
+shape = SubResource("RectangleShape2D_eyv7q")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=153111286]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=793550454]
+shape = SubResource("RectangleShape2D_rehgp")
+debug_color = Color(0.81818205, 0.40522724, 9.62615e-07, 0.41960785)
+
+[node name="Timer" type="Timer" parent="." unique_id=523134581]
+wait_time = 10.0
+one_shot = true

@@ -24,6 +24,11 @@ GameManager="*uid://d3vqjjkrgdr88"
 
 window/vsync/vsync_mode=2
 
+[global_group]
+
+geysers=""
+fireballs=""
+
 [input]
 
 jump={

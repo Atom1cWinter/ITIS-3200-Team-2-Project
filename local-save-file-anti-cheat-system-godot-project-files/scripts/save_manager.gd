@@ -6,7 +6,7 @@ const SERVER_URL = "http://2.tcp.ngrok.io:15081" # This is a direct TCP endpoint
 @onready var http_request = $HTTPRequest
 
 # ----------- Saving -----------
-func create_secure_save(save_dict: Dictionary, slot_name: String = "default_save") -> void:
+func create_secure_save(save_dict: Dictionary, slot_name: String = "default_save") -> int:
 	var save_path = "user://" + slot_name + ".json"
 	var stringified_data = JSON.stringify(save_dict)
 	
@@ -35,9 +35,11 @@ func create_secure_save(save_dict: Dictionary, slot_name: String = "default_save
 		file.store_string(JSON.stringify(file_contents))
 		file.close()
 		print("SUCCESS: Save Created! (Save slot " + save_path + ")")
+		return 0
 	else:
 		var error_msg = response_body.get_string_from_utf8()
 		push_error("Server failed to generate HMAC. HTTP Code: ", response_code, " | Server says: ", error_msg)
+		return -1
 		
 
 # ------------ Loading -----------------
