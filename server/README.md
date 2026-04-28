@@ -12,10 +12,13 @@ If you were provided with the pre-configured `.ova` image, follow these steps to
    * **CPU:** 2 Cores.
    * **Network Adapter:** Set to **Bridged Adapter** (or NAT with port forwarding for port 8000 if Bridged is unavailable on your network).
 4. Click **Finish** and start the Virtual Machine.
-5. Once prompted, log in with the following credentials:
-   * **Username:** `vboxuser`
-   * **Password:** `password123`
-6. Once logged in, open a terminal and navigate to the server project directory.
+5. [cite_start]Once prompted, log in with the following credentials[cite: 1]:
+   * [cite_start]**Username:** `vboxuser` [cite: 1]
+   * [cite_start]**Password:** `password123` [cite: 1]
+6. Once logged in, open a terminal and navigate to the server directory by running:
+   ```bash
+   cd ~/sign-server
+   ```
 
 ## Option B: Deployment from Scratch (Ubuntu)
 To set up the server environment from a fresh Ubuntu installation:
@@ -24,29 +27,53 @@ To set up the server environment from a fresh Ubuntu installation:
    ```bash
    sudo apt update && sudo apt upgrade -y
    ```
-2. Install Python 3 and pip:
+2. Install Python 3, pip, venv, and tmux:
    ```bash
-   sudo apt install python3 python3-pip -y
+   sudo apt install python3 python3-pip python3-venv tmux -y
    ```
-3. Install the required Python libraries for the server:
+3. Create and activate a virtual environment, then install requirements:
    ```bash
+   python3 -m venv venv
+   source venv/bin/activate
    pip install fastapi uvicorn
    ```
-4. Download the server source code (`main.py`) into your desired directory.
+4. Download the server source code (`main.py`) into your desired directory (e.g., `~/sign-server`).
 
 ## Running the Server and ngrok Tunnel
-Because the server needs to be reachable over the internet (bypassing local CGNAT/firewalls), we use ngrok to establish a TCP tunnel.
+Because the server needs to be reachable over the internet (bypassing local CGNAT/firewalls), we use ngrok to establish a TCP tunnel. It is highly recommended to use `tmux` to run both the server and ngrok side-by-side in a single, persistent terminal session.
 
-1. **Start the FastAPI Server:**
-   In your terminal, navigate to the directory containing `main.py` and run:
+### Method: Using tmux (Recommended)
+`tmux` allows you to split your terminal screen and keep the server running safely in the background.
+
+1. **Start a new tmux session:**
    ```bash
+   tmux new -s hmac_server
+   ```
+2. **Start the FastAPI Server:**
+   Navigate to the directory, activate the virtual environment, and run uvicorn:
+   ```bash
+   cd ~/sign-server
+   source venv/bin/activate
    uvicorn main:app --host 0.0.0.0 --port 8000
    ```
    *The server is now listening locally on port 8000.*
-
-2. **Establish the ngrok TCP Tunnel:**
-   Open a **second terminal window** and run:
+3. **Split the terminal and start ngrok:**
+   * Press `Ctrl+B`, then `%` to split the screen vertically.
+   * In the new right-hand pane, start the ngrok tunnel:
    ```bash
    ngrok tcp 8000
    ```
    *Note: ngrok will display a forwarding URL in the terminal (e.g., `tcp://2.tcp.ngrok.io:15081`).*
+4. **Detach from the session (Optional):**
+   * Press `Ctrl+B`, then `d` to safely detach. The server and tunnel will keep running in the background. 
+   * To reconnect and view the logs later, run: `tmux attach -t hmac_server`
+
+## Godot Client Configuration
+Whenever the server is restarted or a new ngrok tunnel is created, the client must be updated to point to the new address.
+
+1. Copy the forwarding URL provided by ngrok (excluding the `tcp://` prefix).
+2. Open the Godot project and navigate to `save_manager.gd`.
+3. Update the `SERVER_URL` constant, ensuring it uses the `http://` prefix:
+   ```gdscript
+   const SERVER_URL = "[http://2.tcp.ngrok.io:15081](http://2.tcp.ngrok.io:15081)"
+   ```
