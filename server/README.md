@@ -3,7 +3,7 @@
 This repository contains the deployment instructions and environment configuration for the FastAPI security server used to generate and verify HMAC-SHA256 signatures for Godot game saves.
 
 ## Option A: Redeployment via OVA (VirtualBox)
-If you were provided with the pre-configured `.ova` image, follow these steps to import and run the server environment:
+The .ova image can be found [here](https://drive.google.com/file/d/1Xdim_A4SjYl-yVsE2fCNkJPffqFEVhbE/view?usp=drive_link). Follow these steps to import and run the server environment:
 
 1. Open Oracle VM VirtualBox.
 2. Go to **File > Import Appliance** and select the provided `.ova` file.
