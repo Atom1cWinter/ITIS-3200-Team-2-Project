@@ -1,26 +1,51 @@
-__***README Signing Server***__
+# Server Deployment Guide - HMAC Security Server
 
-To reimplement signing server (server is down, wanting to be moved, or you want to set it up for testing on your machine)
-use the HMAC-Signing-Server.ova file found in the shared google drive.
+This repository contains the deployment instructions and environment configuration for the FastAPI security server used to generate and verify HMAC-SHA256 signatures for Godot game saves.
 
-Using Oracle VirtualBox, click *'File' > 'Import Appliance'* and add the HMAC-Signing-Server.ova in. 
+## Option A: Redeployment via OVA (VirtualBox)
+If you were provided with the pre-configured `.ova` image, follow these steps to import and run the server environment:
 
-- **BEFORE** hitting finish, **Change MAC address policy to 'Generate new MAC address or all new network adapters'**
-- **BEFORE** hitting start: 
-    Right-click the *HMAC-Signing-Server* and go to *Settings*.
-    Go to the 'Network' tab
-    Change *'Attached to'* to *'Bridged Adapter'*
-    Under *'Name'* select **your personal active internet connection** (e.g. "Intel(R) Wi-Fi 6" or "Realtek PCIe Ethernet")
+1. Open Oracle VM VirtualBox.
+2. Go to **File > Import Appliance** and select the provided `.ova` file.
+3. Keep the default import settings, but ensure the following specifications are met for optimal performance:
+   * **RAM:** 2048 MB (2 GB) minimum.
+   * **CPU:** 2 Cores.
+   * **Network Adapter:** Set to **Bridged Adapter** (or NAT with port forwarding for port 8000 if Bridged is unavailable on your network).
+4. Click **Finish** and start the Virtual Machine.
+5. Once prompted, log in with the following credentials:
+   * **Username:** `vboxuser`
+   * **Password:** `password123`
+6. Once logged in, open a terminal and navigate to the server project directory.
 
-**Note**: You might want to change how much RAM and how many processors you'll allow it to access (The default should be 4096MB and 2 Processors).
+## Option B: Deployment from Scratch (Ubuntu)
+To set up the server environment from a fresh Ubuntu installation:
 
+1. Update the package lists:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+Install Python 3 and pip:
 
-The implemented server *should* contain all of the required plugins needed for the server and *should* contain the main.py file needed to run.
-There should also be an included virtual environment needed to run the server.
+Bash
+sudo apt install python3 python3-pip -y
+Install the required Python libraries for the server:
 
+Bash
+pip install fastapi uvicorn
+Download the server source code (main.py) into your desired directory.
 
-***TO RUN THE SERVER***
-- Run 'ip addr show' to find your IP address; update the 'SERVER_URL' constant in SaveManager.gd with this value (should start with 192.168.x.x)
-- 'cd sign-server'
-- 'source venv/bin/activate' to run your virtual environment
-- Run 'uvicorn main:app --host 0.0.0.0 --port 8000' to start the API server and allow HMAC processing
+Running the Server and ngrok Tunnel
+Because the server needs to be reachable over the internet (bypassing local CGNAT/firewalls), we use ngrok to establish a TCP tunnel.
+
+Start the FastAPI Server:
+In your terminal, navigate to the directory containing main.py and run:
+
+Bash
+uvicorn main:app --host 0.0.0.0 --port 8000
+The server is now listening locally on port 8000.
+
+Establish the ngrok TCP Tunnel:
+Open a second terminal window and run:
+
+Bash
+ngrok tcp 8000
+Note: ngrok will display a forwarding URL in the terminal (e.g., tcp://2.tcp.ngrok.io:15081).
