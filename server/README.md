@@ -23,29 +23,30 @@ To set up the server environment from a fresh Ubuntu installation:
 1. Update the package lists:
    ```bash
    sudo apt update && sudo apt upgrade -y
-Install Python 3 and pip:
+   ```
+2. Install Python 3 and pip:
+   ```bash
+   sudo apt install python3 python3-pip -y
+   ```
+3. Install the required Python libraries for the server:
+   ```bash
+   pip install fastapi uvicorn
+   ```
+4. Download the server source code (`main.py`) into your desired directory.
 
-Bash
-sudo apt install python3 python3-pip -y
-Install the required Python libraries for the server:
-
-Bash
-pip install fastapi uvicorn
-Download the server source code (main.py) into your desired directory.
-
-Running the Server and ngrok Tunnel
+## Running the Server and ngrok Tunnel
 Because the server needs to be reachable over the internet (bypassing local CGNAT/firewalls), we use ngrok to establish a TCP tunnel.
 
-Start the FastAPI Server:
-In your terminal, navigate to the directory containing main.py and run:
+1. **Start the FastAPI Server:**
+   In your terminal, navigate to the directory containing `main.py` and run:
+   ```bash
+   uvicorn main:app --host 0.0.0.0 --port 8000
+   ```
+   *The server is now listening locally on port 8000.*
 
-Bash
-uvicorn main:app --host 0.0.0.0 --port 8000
-The server is now listening locally on port 8000.
-
-Establish the ngrok TCP Tunnel:
-Open a second terminal window and run:
-
-Bash
-ngrok tcp 8000
-Note: ngrok will display a forwarding URL in the terminal (e.g., tcp://2.tcp.ngrok.io:15081).
+2. **Establish the ngrok TCP Tunnel:**
+   Open a **second terminal window** and run:
+   ```bash
+   ngrok tcp 8000
+   ```
+   *Note: ngrok will display a forwarding URL in the terminal (e.g., `tcp://2.tcp.ngrok.io:15081`).*
