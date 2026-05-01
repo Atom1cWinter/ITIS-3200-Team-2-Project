@@ -1,7 +1,7 @@
 extends Node
 
 # This is the server IP address, change if different deployment address
-const SERVER_URL = "http://6.tcp.ngrok.io:13828" # This is a direct TCP endpoint, there were issues with deployment
+const SERVER_URL = "http://6.tcp.ngrok.io:12563" # This is a direct TCP endpoint, there were issues with deployment
 
 @onready var http_request = $HTTPRequest
 
@@ -47,6 +47,7 @@ func create_secure_save(save_dict: Dictionary):
 	var request_error = http_request.request(SERVER_URL + "/generate-hmac", headers, HTTPClient.METHOD_POST, body)
 	if request_error != OK:
 		push_error("Server request failed before send. Error: %s" % error_string(request_error))
+		return
 	
 	# Wait for server to respond
 	var result = await http_request.request_completed
