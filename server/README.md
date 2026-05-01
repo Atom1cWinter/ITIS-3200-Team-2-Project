@@ -10,11 +10,12 @@ The .ova image can be found [here](https://drive.google.com/file/d/1Xdim_A4SjYl-
 3. Keep the default import settings, but ensure the following specifications are met for optimal performance:
    * **RAM:** 2048 MB (2 GB) minimum.
    * **CPU:** 2 Cores.
+   * **MAC Address Policy:** Generate new MAC addresses for all network adapters
    * **Network Adapter:** Set to **Bridged Adapter** (or NAT with port forwarding for port 8000 if Bridged is unavailable on your network).
 4. Click **Finish** and start the Virtual Machine.
-5. [cite_start]Once prompted, log in with the following credentials[cite: 1]:
-   * [cite_start]**Username:** `vboxuser` [cite: 1]
-   * [cite_start]**Password:** `password123` [cite: 1]
+5. Once prompted, log in with the following credentials[cite: 1]:
+   * **Username:** `vboxuser`
+   * **Password:** `password123`
 6. Once logged in, open a terminal and navigate to the server directory by running:
    ```bash
    cd ~/sign-server
